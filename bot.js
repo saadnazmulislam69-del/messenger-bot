@@ -2,7 +2,7 @@ require('dotenv').config();
 const http = require('http');
 const fs = require('fs');
 const { MongoClient } = require('mongodb');
-const login = require('fca-eryxenx'); // Using the older library to avoid E2EE issues
+const { login } = require('biar-fca'); 
 
 // --- 1. HTTP Server (For Render) ---
 const server = http.createServer((req, res) => {
@@ -30,7 +30,12 @@ function startBot() {
     }
     const appState = JSON.parse(fs.readFileSync('appstate.json', 'utf8'));
 
-    login({ appState: appState }, (err, api) => {
+    // Adding options to make it stable
+    login({ appState: appState }, { 
+        listenEvents: true, 
+        selfListen: false, 
+        autoMarkRead: true 
+    }, (err, api) => {
         if (err) return console.error("Login failed:", err);
         console.log("✅ Bot is online!");
 
