@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: messenger-bot
+    runtime: node
+    buildCommand: npm install --allow-git=all
+    startCommand: node bot.js
